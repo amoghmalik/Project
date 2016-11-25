@@ -12,6 +12,14 @@ covertData = overtData[1:(length(secretMessage) + 1),]
 #here we will only consider the part of the overt channel equal to the length of the covert one
 overtData = overtData[1:nrow(covertData),]
 
+#Instanciate vectors to store inter packet delays for PMF histograms
+ipDelaysCovert = numeric(nrow(covertData) - 1)
+ipDelaysOvert = numeric(nrow(overtData) - 1)
+
+#Compute inter-delay values for overt channel
+for (i in 2:nrow(overtData)) {
+    ipDelaysOvert[i - 1] = round(overtData[i, 2] - overtData[i - 1, 2], 2)
+    }
 #first we need to sort the ip-delays of the overt channel
 #then we need to find the index of the median in the sorted ip-delays of the overt channel
 sortedOvertDelays = sort(ipDelaysOvert)
@@ -26,17 +34,13 @@ for (i in 2:(length(secretMessage) + 1)) {
 	covertData[i, 2] = covertData[i, 2] + covertData[i - 1, 2]
 }
 
-#Instanciate vectors to store inter packet delays for PMF histograms
-ipDelaysCovert = numeric(nrow(covertData)-1)
-ipDelaysOvert = numeric(nrow(overtData)-1)
+
 
 #Here we assume delays will be between 0 and 0.6 sec
 possibleInterDelays = seq.int(0, 0.6, 0.01)
 
-#Compute inter-delay values for overt and covert channels
+#Compute inter-delay values for covert channel
 for (i in 2:nrow(overtData)) {
-	ipDelaysOvert[i - 1] = round(overtData[i, 2] - overtData[i - 1, 2], 2)
-	if (i <= nrow(covertData))
 		ipDelaysCovert[i - 1] = round(covertData[i, 2] - covertData[i - 1, 2], 2)
 }
 
