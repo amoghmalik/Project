@@ -8,7 +8,9 @@ secretMessage = c(0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1,
 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 
 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0,
 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1)
-covertData = overtData[1:(length(secretMessage)+1),]
+covertData = overtData[1:(length(secretMessage) + 1),]
+#here we will only consider the part of the overt channel equal to the length of the covert one
+overtData = overtData[1:nrow(covertData),]
 
 #first we need to compute the inter-delays median, min and max of the overt distribution
 med = median(ipDelaysOvert)
@@ -28,8 +30,8 @@ for (i in 2:(length(secretMessage) + 1)) {
 ipDelaysCovert = numeric(nrow(covertData)-1)
 ipDelaysOvert = numeric(nrow(overtData)-1)
 
-#Here we assume delays will be between 0 and 1 sec
-possibleInterDelays = seq.int(0, 1, 0.01)
+#Here we assume delays will be between 0 and 0.6 sec
+possibleInterDelays = seq.int(0, 0.6, 0.01)
 
 #Compute inter-delay values for overt and covert channels
 for (i in 2:nrow(overtData)) {
