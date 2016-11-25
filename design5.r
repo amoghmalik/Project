@@ -35,7 +35,6 @@ possibleInterDelays = seq.int(0, 0.6, 0.01)
 
 #Compute inter-delay values for overt and covert channels
 for (i in 2:nrow(overtData)) {
-	print(i)
 	ipDelaysOvert[i - 1] = round(overtData[i, 2] - overtData[i - 1, 2], 2)
 	if (i <= nrow(covertData))
 		ipDelaysCovert[i - 1] = round(covertData[i, 2] - covertData[i - 1, 2], 2)
@@ -58,8 +57,11 @@ barplot(probaOvert, main = "PMF for X, inter-delays' RV of the overt channel", x
 
 
 
+# ### Detection ###
+#Question 8
 
-
+qqplot(ipDelaysCovert, ipDelaysOvert, main="Question 8")
+abline(a=0,b=1)
 
 
 

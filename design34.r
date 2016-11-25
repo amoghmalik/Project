@@ -57,6 +57,10 @@ barplot(probaOvert, main = "PMF for X, inter-delays' RV of the overt channel", x
 
 
 
+# ### Detection ###
+#Question 7
+
+qqplot(ipDelaysCovert, ipDelaysOvert, main="Question 7")
 
 
 
