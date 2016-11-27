@@ -21,16 +21,16 @@ for (i in 2:nrow(overtData)) {
     ipDelaysOvert[i - 1] = round(overtData[i, 2] - overtData[i - 1, 2], 2)
     }
 #first we need to sort the ip-delays of the overt channel
-#then we need to find the index of the median in the sorted ip-delays of the overt channel
+#then we need to find the median
 sortedOvertDelays = sort(ipDelaysOvert)
-med = match(median(ipDelaysOvert),sort(ipDelaysOvert))
+med = median(ipDelaysOvert)
 
 for (i in 2:(length(secretMessage) + 1)) {
 	#Insertion of the secret message using packet delays
 	if (secretMessage[i - 1] == 0)
-		covertData[i, 2] = sample(sortedOvertDelays[1:med], 1)
+		covertData[i, 2] = sample(sortedOvertDelays[sortedOvertDelays <= med], 1)
 	else
-		covertData[i, 2] = sample(sortedOvertDelays[med:length(sortedOvertDelays)], 1)
+        covertData[i, 2] = sample(sortedOvertDelays[sortedOvertDelays > med], 1)
 	covertData[i, 2] = covertData[i, 2] + covertData[i - 1, 2]
 }
 
@@ -64,8 +64,8 @@ barplot(probaOvert, main = "PMF for X, inter-delays' RV of the overt channel", x
 # ### Detection ###
 #Question 8
 
-qqplot(ipDelaysCovert, ipDelaysOvert, main="Question 8")
-abline(a=0,b=1)
+#qqplot(ipDelaysCovert, ipDelaysOvert, main="Question 8")
+#abline(a=0,b=1)
 
 
 
